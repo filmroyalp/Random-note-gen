@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J A Z Z</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            text-align: center;
+        }
+
+        #textContainer {
+            font-size: 900%;
+        }
+
+        .customButton {
+            font-size: 18px;
+            background-color: rgb(255, 255, 255);
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #333333;
+            padding: 2vw;
+        }
+
+        #buttonContainer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+        #ww {
+            font-size: 18px;
+            background-color: rgb(255, 255, 255);
+            margin: 2px;
+            border-radius: 5px;
+            border: 1px solid #333333;
+            padding: 2vw;
+            right : 0;
+            bottom: 0;
+            
+            position: relative;
+        }
+        #Col {
+            position: fixed;
+            bottom: 0;
+            width: 10%;
+            text-align: right;
+        }
+        .Colordiv {
+            position: relative;
+            width: 100%;
+            height: 100vh; 
+        }
+    </style>
+
+</head>
+
+<body>
+    <script>
+        let x = 1
+        function Colorw() {
+            var b = "black"
+            var w = "white"
+            if (x == 0) {
+                b = "white"
+                w = "black"
+            } else if (x == 1) {
+                b = "black"
+                w = "white"
+            } else {
+                return "error"
+            }
+            const collection = document.getElementsByClassName("customButton");
+            for (let i = 0; i < collection.length; i++) {
+            collection[i].style.backgroundColor = b;
+            collection[i].style.color = w
+            }
+            document.getElementById("textContainer").style.color = w;
+            document.body.style.backgroundColor = b;
+            
+            
+            
+            
+            if (x===1) {
+                x=0
+                document.getElementById("ww").textContent = "White Mode"
+            }
+            else if (x===0){
+                x=1
+                document.getElementById("ww").textContent = "Dark Mode"
+            }else {
+                return "error"
+            }
+            
+            
+            
+            
+            
+
+
+        }
+    </script>
+    
+    
+    
+    <div id="textContainer">Space To Start</div>
+
+    <div id="buttonContainer">
+        <button id="w" class="customButton" onclick="buttonClicked1()">Easy</button>
+        <button id="w" class="customButton" onclick="buttonClicked2()">Hard</button>
+        <button id="w" class="customButton" onclick="buttonClicked3()">Notes</button>
+        <button id="w" class="customButton" onclick="buttonClicked4()">Chords</button>
+        <button id = "ww" class="customButton" onclick="Colorw()">Dark Mode</button>
+    </div>
+    
+    <script>
+        const notes = ["A", "B", "C", "D", "E", "F", "G", "A#","C#","D#","F#","G#"];
+        const intervals_easy = ["1st", "3rd", "5th", "7th"]
+        const intervals_hard = ["1st", "3rd", "5th", "7th", "9th", "11th", "13th"]
+        var r = ""
+        var r2 = "notes"
+
+        
+        function buttonClicked1(){
+            
+            r = "easy"
+            
+        }
+        function buttonClicked2() {
+            r = "hard"
+            
+        }
+        function buttonClicked3() {
+            r2 = "notes"
+        }
+        function buttonClicked4() {
+            r2 = "chords"
+        }
+        
+        function random_now() {
+            const random_notes = Math.floor(Math.random() * notes.length);
+            const random_intervals_easy = Math.floor(Math.random() * intervals_easy.length);
+            const random_intervals_hard = Math.floor(Math.random() * intervals_hard.length);
+            if (r2 === "notes") {
+                
+                return notes[random_notes]
+            } 
+            
+            else if (r2 === "chords") {
+
+
+                if (r === "hard") {
+                    
+                    return intervals_hard[random_intervals_hard] + " of " + notes[random_notes]
+                } 
+                
+                else if (r === "easy") {
+                    
+                    
+                    return intervals_easy[random_intervals_easy] + " of " + notes[random_notes]
+
+                } 
+                
+                else {alert("Please Select Difficulty")}
+
+            } 
+            else {
+                alert("PLEASE SELECT THE MODES DOWN BELOW")
+            }
+
+            
+
+        }
+        document.addEventListener('keydown', function (event) {
+            if (event.keyCode === 32) {
+                document.getElementById("textContainer").textContent = random_now();
+            }
+        });
+
+        document.getElementById("textContainer").addEventListener('touchstart', function () {
+            document.getElementById("textContainer").textContent = random_now();
+        });
+
+        
+    </script>
+
+</body>
+
+</html>
