@@ -21,6 +21,7 @@
         }
         #sub-text {
             font-size: 200%;
+            margin-bottom: 1.5cm;
         }
 
         .customButton {
@@ -65,37 +66,61 @@
     
 </head>
     <div id="main-text">Settings</div>
-    <p id="sub-text"style="text-align:left;">
+    <hr style="width:100%;text-align:left;margin-left:0;color:black;height: 2px;background-color:black">
+    <p id="sub-text"style="text-align:left;margin-left: 8px;">
         Types
-        <button style="float:right" class="customButton">Apreggios/Chords</button>
-        <button style="float:right" class="customButton">Notes</button>
+        <button onclick="Types('Apreg')"name="Apreggios/Chords"id="typebtn"style="float:right" class="customButton">Apreggios/Chords</button>
+        <button onclick="Types('Notes')"name="Notes"id="typebtn"style="float:right" class="customButton">Notes</button>
     </p>
-    <p id="sub-text"style="text-align:left;">
+    <hr style="width:100%;text-align:left;margin-left:0;color:black;height: 2px;background-color:black">
+    <p id="sub-text" style="text-align:left;margin-left: 8px;">
         Timer
-        <button style="float:right" class="customButton">5s</button>
-        <button style="float:right" class="customButton">10s</button>
-    </p>
-    <p id="sub-text"style="text-align:left;">
-        Sort 
-        <button style="float:right" class="customButton">Random</button>
-        <button style="float:right" class="customButton">5th</button>
+        <button onclick="Timer(false)" name="offtm" id="timerbtn" style="float:right" class="customButton">Off</button>
+        <button onclick="Timer('10s')" name="10s" id="timerbtn" style="float:right" class="customButton">10s</button>
+        <button onclick="Timer('5s')"name="5s"id="timerbtn"style="float:right" class="customButton">5s</button>
+        
         
     </p>
-    <p id="sub-text"style="text-align:left;"> By
-        <button style="float:right" class="customButton">Chromatic</button>
-        <button style="float:right" class="customButton">4th</button>
+    <hr style="width:100%;text-align:left;margin-left:0;color:black;height: 2px;background-color:black">
+    <p  style="text-align:left;margin-left: 8px;font-size:200%">
+        Sort By
+        <button onclick="Sort_By('Random')"name="Random"id="sortbtn"style="float:right" class="customButton">Random</button>
+        <button onclick="Sort_By('5th')"name="5th"id="sortbtn"style="float:right" class="customButton">5th</button>
         
     </p>
+    <p id="sub-text" style="text-align:left;margin-left: 8px;">  
+        <button onclick="Sort_By('Chromatic')"name="Chromatic"id="sortbtn" style="float:right" class="customButton">Chromatic</button>
+        <button onclick="Sort_By('4th')"name="4th"id="sortbtn"style="float:right;margin-bottom: 1cm;" class="customButton">4th</button>
+        
+    </p>
+    <hr style="width:100%;text-align:left;margin-left:0;color:black;height: 2px;background-color:black">
+    <p id="sub-text" style="text-align:left;margin-left: 8px;"> Display
+        <button onclick="Display('b')"name="b"id="displaybtn" style="float:right;margin-bottom: 1cm;" class="customButton">b</button>
+        <button onclick="Display('#')"name="#"id="displaybtn" style="float:right" class="customButton">#</button>
+        
     
-
-
-    <p id="sub-text"style="text-align:left;">
-        เอาโน็ตในChordมั้ย
-        
-        <button style="float:right" class="customButton">Off</button>
-        <button style="float:right" class="customButton">On</button>
-        
     </p>
+    <hr style="width:100%;text-align:left;margin-left:0;color:black;height: 2px;background-color:black">
+
+
+    <p id="sub-text" style="text-align:left;margin-left: 12px;">
+        Degree
+        
+        <button onclick="Degree(false)"name="Off"id="degbtn"style="float:right" class="customButton">Off</button>
+        <button onclick="Degree('Easy')"name="Easy"id="degbtn"style="float:right" class="customButton">Easy</button>
+        <button onclick="Degree('Hard')"Name="Hard"id="degbtn"style="float:right" class="customButton">Hard</button>
+
+    </p>
+    <hr style="width:100%;text-align:left;margin-left:0;color:black;height: 2px;background-color:black">
+    <p id="sub-text" style="text-align:left;margin-left: 12px;">
+        Color
+        <button onclick="Color('Black')" name="Black" id="degbtn" style="float:right" class="customButton">Black</button>
+        <button onclick="Color('White')" name="White" id="degbtn" style="float:right" class="customButton">White</button>
+        
+    
+    </p>
+    <hr style="width:100%;text-align:left;margin-left:0;color:black;height: 2px;background-color:black">
+    <button onclick="warp()"  style="text-align:center;background-color: inherit;border: 1px;" id="sub-text">Go Back</button>
 
         
 
@@ -104,5 +129,52 @@
     
 
 </body>
+<script>
+    type = 'Notes'
+    display ="#"
+    degree = "off"
+    sort = "random"
+    localStorage.setItem("Types", "Notes")
+    localStorage.setItem("Timer", false)
+    localStorage.setItem("Sort_By", "Random")
+    localStorage.setItem("Display", "#")
+    localStorage.setItem("Degree", false)
+    localStorage.setItem("Color", "White")
+    function Types(n) {
+        localStorage.setItem("Types", n)
 
+        
+    }
+    function Timer(n) {
+        localStorage.setItem("Timer", n)
+        if (n === false) {
+            localStorage.setItem("Timercon", 'false')
+        } else {
+            localStorage.setItem("Timercon", 'True')
+        }
+        
+
+    }
+    
+    function Sort_By(n){
+        localStorage.setItem("Sort_By", n)
+
+    }
+
+    function Display(n) {
+        localStorage.setItem("Display", n)
+
+    }
+
+    function Degree(n) {
+        localStorage.setItem("Degree", n)
+
+    }
+    function Color(n){
+        localStorage.setItem("Color", n)
+    }
+    function warp() {
+            window.location.href = "index.html";
+        }
+</script>
 </html>

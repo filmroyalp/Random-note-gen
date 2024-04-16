@@ -18,13 +18,14 @@
 
         #textContainer {
             font-size: 900%;
+            color : white
         }
 
         .customButton {
-            font-size: 18px;
+            font-size: 25px;
             background-color: rgb(255, 255, 255);
             margin: 5px;
-            border-radius: 5px;
+            border-radius: 2px;
             border: 1px solid #333333;
             padding: 2vw;
         }
@@ -35,6 +36,7 @@
             width: 100%;
             text-align: center;
         }
+
         #ww {
             font-size: 18px;
             background-color: rgb(255, 255, 255);
@@ -42,155 +44,160 @@
             border-radius: 5px;
             border: 1px solid #333333;
             padding: 2vw;
-            right : 0;
+            right: 0;
             bottom: 0;
-            
+
             position: relative;
         }
+
         #Col {
             position: fixed;
             bottom: 0;
             width: 10%;
             text-align: right;
         }
+
         .Colordiv {
             position: relative;
             width: 100%;
-            height: 100vh; 
+            height: 100vh;
         }
     </style>
 
 </head>
 
 <body>
-    <script>
-        let x = 1
-        function Colorw() {
-            var b = "black"
-            var w = "white"
-            if (x == 0) {
-                b = "white"
-                w = "black"
-            } else if (x == 1) {
-                b = "black"
-                w = "white"
-            } else {
-                return "error"
-            }
-            const collection = document.getElementsByClassName("customButton");
-            for (let i = 0; i < collection.length; i++) {
-            collection[i].style.backgroundColor = b;
-            collection[i].style.color = w
-            }
-            document.getElementById("textContainer").style.color = w;
-            document.body.style.backgroundColor = b;
-            
-            
-            
-            
-            if (x===1) {
-                x=0
-                document.getElementById("ww").textContent = "White Mode"
-            }
-            else if (x===0){
-                x=1
-                document.getElementById("ww").textContent = "Dark Mode"
-            }else {
-                return "error"
-            }
-            
-            
-            
-            
-            
+    
 
 
-        }
-    </script>
-    
-    
-    
+
     <div id="textContainer">Space To Start</div>
-
-    <div id="buttonContainer">
-        <button id="w" class="customButton" onclick="buttonClicked1()">Easy</button>
-        <button id="w" class="customButton" onclick="buttonClicked2()">Hard</button>
-        <button id="w" class="customButton" onclick="buttonClicked3()">Notes</button>
-        <button id="w" class="customButton" onclick="buttonClicked4()">Chords</button>
-        <button id = "ww" class="customButton" onclick="Colorw()">Dark Mode</button>
-    </div>
+    <div id="buttonContainer"><button id = "ww"class="customButton" onclick="warp()">Settings</button></div>
     
+
     <script>
-        const notes = ["A", "B", "C", "D", "E", "F", "G", "A#","C#","D#","F#","G#"];
+        function warp(){
+            window.location.href = "settings.html";
+        }
+        const note_sharp = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+        const note_flat = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G","Ab","A", "Bb", "B"];
+        const quality = ["△", "-", "∅", "◯", "+"]
+        const number = ["","6", "7","9","13"]
         const intervals_easy = ["1st", "3rd", "5th", "7th"]
         const intervals_hard = ["1st", "3rd", "5th", "7th", "9th", "11th", "13th"]
-        var r = ""
-        var r2 = "notes"
+        
+        var chromatic = 0
+        var fifth = 0
+        var fourth = 0
 
-        
-        function buttonClicked1(){
-            
-            r = "easy"
-            
-        }
-        function buttonClicked2() {
-            r = "hard"
-            
-        }
-        function buttonClicked3() {
-            r2 = "notes"
-        }
-        function buttonClicked4() {
-            r2 = "chords"
-        }
-        
         function random_now() {
-            const random_notes = Math.floor(Math.random() * notes.length);
+            var notes = ''
+            const random_notes = Math.floor(Math.random() * note_flat.length);
             const random_intervals_easy = Math.floor(Math.random() * intervals_easy.length);
             const random_intervals_hard = Math.floor(Math.random() * intervals_hard.length);
-            if (r2 === "notes") {
-                
-                return notes[random_notes]
-            } 
+            const random_number = Math.floor(Math.random() * number.length);
+            const random_quality = Math.floor(Math.random() * quality.length);
             
-            else if (r2 === "chords") {
+            
+            if (localStorage.getItem('Display') === "#") {
+                notes = note_sharp
+            } else {
+                notes = note_flat
+            }
+            if (localStorage.getItem("Types") === "Notes") {
 
-
-                if (r === "hard") {
+                if (localStorage.getItem("Sort_By") === "Random") { 
+                    return notes[random_notes]
                     
-                    return intervals_hard[random_intervals_hard] + " of " + notes[random_notes]
-                } 
+
+                } else if (localStorage.getItem("Sort_By") === "Chromatic") { 
+                    chromatic += 1
+                    console.log(chromatic)
+                    return notes[(chromatic-1)%12]}
+                else if (localStorage.getItem("Sort_By") === "5th") {
+                    fifth +=7
+                    return notes[((fifth-7)% 12) ]
+                } else if (localStorage.getItem("Sort_By") === "4th") {
+                    fourth +=5
+                    return notes[((fourth-5) % 12) ]
+
+                }  else { alert("Choose Chords!")}
+
+            } else if (localStorage.getItem("Types") === "Apreg") {
+                const chord = notes[random_notes] + quality[random_quality] + number[random_number]
+                if (localStorage.getItem("Degree") === "false"){
                 
-                else if (r === "easy") {
-                    
-                    
-                    return intervals_easy[random_intervals_easy] + " of " + notes[random_notes]
+                    return chord
+                } else if (localStorage.getItem("Degree") === "Easy") {
+                    return intervals_easy[random_intervals_easy] + " of " + chord
+                } else if (localStorage.getItem("Degree") === "Hard") {
+                    return intervals_hard[random_intervals_hard] + " of " + chord
+                }
 
-                } 
-                
-                else {alert("Please Select Difficulty")}
+            } else { return }
 
-            } 
-            else {
-                alert("PLEASE SELECT THE MODES DOWN BELOW")
             }
 
-            
 
-        }
+
+        
         document.addEventListener('keydown', function (event) {
-            if (event.keyCode === 32) {
+            if (localStorage.getItem("Timer") === 'false'  && event.keyCode === 32){
                 document.getElementById("textContainer").textContent = random_now();
+            }
+            else  {
+                console.log(localStorage.getItem("Timer"))
+                return
             }
         });
 
         document.getElementById("textContainer").addEventListener('touchstart', function () {
-            document.getElementById("textContainer").textContent = random_now();
+            if (localStorage.getItem("Timer") === 'false') {
+                document.getElementById("textContainer").textContent = random_now();
+            } else {
+                console.log(localStorage.getItem("Timer"))
+                return
+            }
+            
         });
+        function change(){
+            document.getElementById("textContainer").textContent = random_now();
 
-        
+        }
+
     </script>
 
+    <script defer>
+        if (localStorage.getItem("Color") === 'Black') {
+            const collection = document.getElementsByClassName("customButton");
+            for (let i = 0; i < collection.length; i++) {
+                collection[i].style.backgroundColor = 'black';
+                collection[i].style.color = 'white';
+            }
+            document.getElementById("textContainer").style.color = 'white';
+            document.body.style.backgroundColor = 'black';
+        } else if (localStorage.getItem("Color") === 'White') {
+            const collection = document.getElementsByClassName("customButton");
+            for (let i = 0; i < collection.length; i++) {
+                collection[i].style.backgroundColor = 'white';
+                collection[i].style.color = 'black';
+            }
+            document.getElementById("textContainer").style.color = 'black';
+            document.body.style.backgroundColor = 'white';
+        }
+    </script>
+    <script defer>
+        function www(){
+            if (localStorage.getItem("Timer") == '5s') {
+                setInterval(change, 5000)
+            } else if (localStorage.getItem("Timer") == '5s') {
+                setInterval(change, 10000)
+            }
+        }
+        www()
+        
+        
+    </script>
 </body>
 
 </html>
